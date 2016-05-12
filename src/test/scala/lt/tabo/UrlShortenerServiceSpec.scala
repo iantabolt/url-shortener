@@ -1,14 +1,14 @@
-package com.example
+package lt.tabo
 
 import org.specs2.mutable.Specification
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._
 
-class MyServiceSpec extends Specification with Specs2RouteTest with MyService {
+class UrlShortenerServiceSpec extends Specification with Specs2RouteTest with UrlShortenerService {
   def actorRefFactory = system
   
-  "MyService" should {
+  "UrlShortenerService" should {
 
     "return a greeting for GET requests to the root path" in {
       Get() ~> myRoute ~> check {
