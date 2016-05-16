@@ -34,6 +34,6 @@ class UrlShortener extends Actor {
 
 object UrlShortener {
   case class Shorten(url: URL) // : String
-  case class GetUrl(short: String) // : Option[String]
+  case class GetUrl(short: String) // : Option[URL]
   case class GetClicks(short: String) // : Option[Int]
 }

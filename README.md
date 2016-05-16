@@ -1,49 +1,43 @@
-## _spray_ Template Project
+## URL Shortener
 
-This projects provides a starting point for your own _spray-routing_ endeavors.
-There are 8 branches, providing templates for _spray-routing_ on
+### Running
 
-* _spray-can_, Scala 2.9 + Akka 2.0 + spray 1.0 (the `on_spray-can_1.0` branch)
-* _spray-can_, Scala 2.10 + Akka 2.1 + spray 1.1 (the `on_spray-can_1.1` branch)
-* _spray-can_, Scala 2.10 + Akka 2.2 + spray 1.2 (the `on_spray-can_1.2` branch)
-* _spray-can_, Scala 2.10 + Akka 2.3 + spray 1.3 (the `on_spray-can_1.3` branch)
-* _spray-can_, Scala 2.11 + Akka 2.3 + spray 1.3 (the `on_spray-can_1.3_scala-2.11` branch)
-* _Jetty_, Scala 2.9 + Akka 2.0 + spray 1.0 (the `on_jetty_1.0` branch)
-* _Jetty_, Scala 2.10 + Akka 2.1 + spray 1.1 (the `on_jetty_1.1` branch)
-* _Jetty_, Scala 2.10 + Akka 2.2 + spray 1.2 (the `on_jetty_1.2` branch)
-* _Jetty_, Scala 2.10 + Akka 2.3 + spray 1.3 (the `on_jetty_1.3` branch)
-* _Jetty_, Scala 2.11 + Akka 2.3 + spray 1.3 (the `on_jetty_1.3_scala-2.11` branch)
+Requires [sbt](http://www.scala-sbt.org/0.13/docs/Setup.html).
 
-You are currently on the `on_spray-can_1.3_scala-2.11` branch.
+```bash
+sbt run
+```
 
-Follow these steps to get started:
+The server will run at `http://localhost:8080`
 
-1. Git-clone this repository.
+### Endpoints
 
-        $ git clone git://github.com/spray/spray-template.git my-project
+#### POST /shorten
 
-2. Change directory into your clone:
+Expects a string containing a well-formed URL, returns the shortened path.
 
-        $ cd my-project
+Example:
 
-3. Launch SBT:
+```bash
+curl http://localhost:8080/shorten --data 'http://google.com'
+```
 
-        $ sbt
+#### POST /getUrl
 
-4. Compile everything and run all tests:
+Expects the shortened path (eg "jX3L2wc") and returns the long URL.
 
-        > test
+Example:
 
-5. Start the application:
+```bash
+curl http://localhost:8080/getUrl --data 'jX3L2wc'
+```
 
-        > re-start
+#### GET /[shortened path]
 
-6. Browse to [http://localhost:8080](http://localhost:8080/)
+Redirects to the URL given the shortened path.
 
-7. Stop the application:
+Example (really you should use your browser):
 
-        > re-stop
-
-8. Learn more at http://www.spray.io/
-
-9. Start hacking on `src/main/scala/com/example/MyService.scala`
+```bash
+curl -L http://localhost:8080/jX3L2wc
+```
