@@ -1,4 +1,4 @@
-package lt.tabo
+package lt.tabo.shorturl
 
 object Base62 {
   val Chars: IndexedSeq[Char] = ('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9')
@@ -13,6 +13,7 @@ object Base62 {
     }
   }
 
+  // TODO: Handle invalid strings
   def decode(s: String): Int = {
     (0 /: s) { (sum, char) =>
       (sum * Base) + CharIndex(char)

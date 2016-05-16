@@ -1,4 +1,4 @@
-package lt.tabo
+package lt.tabo.shorturl
 
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
@@ -13,7 +13,7 @@ object Boot extends App {
   implicit val system = ActorSystem("on-spray-can")
 
   // create and start our service actor
-  val service = system.actorOf(Props[UrlShortenerServiceActor], "url-shortener-service")
+  val service = system.actorOf(Props[UrlShortenerService], "url-shortener-service")
 
   implicit val timeout = Timeout(5.seconds)
   // start a new HTTP server on port 8080 with our service actor as the handler
