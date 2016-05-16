@@ -32,6 +32,16 @@ Example:
 curl http://localhost:8080/getUrl --data 'jX3L2wc'
 ```
 
+#### POST /getClicks
+
+Expects the shortened path (eg "jX3L2wc") and returns the number of times the link has been used.
+
+Example:
+
+```bash
+curl http://localhost:8080/getClicks --data 'jX3L2wc'
+```
+
 #### GET /[shortened path]
 
 Redirects to the URL given the shortened path.

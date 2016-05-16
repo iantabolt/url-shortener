@@ -8,7 +8,7 @@ import spray.routing._
 import spray.http._
 import MediaTypes._
 import akka.util.Timeout
-import UrlShortener.{GetUrl, Shorten}
+import UrlShortener.{GetClicks, GetUrl, Shorten}
 import spray.httpx.unmarshalling.Unmarshaller
 
 import scala.concurrent.Future
@@ -28,6 +28,9 @@ class UrlShortenerService extends Actor with HttpService {
   def getUrl(short: String): Future[Option[URL]] =
     (urlShortener ? GetUrl(short)).mapTo[Option[URL]]
 
+  def getClicks(short: String): Future[Option[Int]] =
+    (urlShortener ? GetClicks(short)).mapTo[Option[Int]]
+
   implicit val UrlUnmarshaller: Unmarshaller[URL] =
     Unmarshaller.delegate[String, URL](ContentTypeRange.`*`)(new URL(_))
 
@@ -40,9 +43,18 @@ class UrlShortenerService extends Actor with HttpService {
           }
         }
       } ~ path("getUrl") {
-        extract(_.request.entity.asString) { short =>
+        entity(as[String]) { short =>
           onSuccess(getUrl(short)) { url =>
             complete(url.toString)
+          }
+        }
+      } ~ path("getClicks") {
+        entity(as[String]) { short =>
+          onSuccess(getClicks(short)) {
+            case Some(clicks) =>
+              complete(clicks.toString)
+            case None =>
+              complete(HttpResponse(StatusCodes.NotFound))
           }
         }
       }
